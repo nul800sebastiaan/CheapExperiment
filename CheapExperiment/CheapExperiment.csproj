@@ -16,18 +16,13 @@
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2.0.9" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
   </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\portfolio-assets\bootstrap.min.css" />
-    <_ContentIncludedByDefault Remove="wwwroot\portfolio-assets\bootstrap.min.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\portfolio-assets\ionicons.eot" />
-    <_ContentIncludedByDefault Remove="wwwroot\portfolio-assets\ionicons.min.css" />
-    <_ContentIncludedByDefault Remove="wwwroot\portfolio-assets\ionicons.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\portfolio-assets\ionicons.ttf" />
-    <_ContentIncludedByDefault Remove="wwwroot\portfolio-assets\ionicons.woff" />
-    <_ContentIncludedByDefault Remove="wwwroot\portfolio-assets\jquery.min.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\portfolio-assets\theme.js" />
+  
+  <ItemGroup>    
+    <Content Include="App_Plugins\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
+
 
   <PropertyGroup>
     <!-- Razor files are needed for the backoffice to work correctly -->
