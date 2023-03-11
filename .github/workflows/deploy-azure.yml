@@ -26,7 +26,7 @@ jobs:
           dotnet-version: 7.0.x
 
       - name: Build the web project
-        run: dotnet build .\${{projectName}}\${{projectName}}.csproj --configuration Release
+        run: dotnet build .\${{env.projectName}}\${{env.projectName}}.csproj --configuration Release
 
       - name: Publish the project
         run: dotnet publish --no-build --configuration Release --output ${{env.DOTNET_ROOT}}/myapp
@@ -54,7 +54,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "$appServiceName"
+          app-name: ${{env.appServiceName}}
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
