@@ -7,8 +7,8 @@
 
   <ItemGroup>
     <PackageReference Include="Clean" Version="2.1.6" />
-    <PackageReference Include="Umbraco.Cms" Version="11.1.0" />
-    <PackageReference Include="uSync" Version="11.0.1" />
+    <PackageReference Include="Umbraco.Cms" Version="11.2.0" />
+    <PackageReference Include="uSync" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +20,7 @@
   <ItemGroup>    
     <Content Include="App_Plugins\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Content>    
   </ItemGroup>
 
 

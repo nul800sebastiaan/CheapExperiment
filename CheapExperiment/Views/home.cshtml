@@ -7,6 +7,8 @@
     Layout = "master.cshtml";
 }
 
+
+
 @await Html.PartialAsync("~/Views/Partials/pageHeader.cshtml", new PageHeaderViewModel(Model.Name, Model.Title, Model.Subtitle, Model.MainImage))
 
 @if (Model.MainContent != null)
@@ -17,3 +19,7 @@
 }
 
 @await Html.PartialAsync("~/Views/Partials/latestArticles.cshtml")
+
+<p>
+    Test link: @Model.Test.Content.Link.Url
+</p>
