@@ -10,7 +10,9 @@ on:
   workflow_dispatch:
 
 env:
-  appServiceName: "cheapexperiment"
+  AZURE_WEBAPP_NAME: cheapexperiment
+  AZURE_WEBAPP_PACKAGE_PATH: "."
+  DOTNET_VERSION: "7.0.x"
 
 jobs:
   build:
@@ -22,7 +24,15 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Set up dependency caching for faster builds
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Build the web project
         run: dotnet build --configuration Release
@@ -53,7 +63,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{env.appServiceName}}
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-          package: .
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
