@@ -10,7 +10,6 @@ on:
   workflow_dispatch:
 
 env:
-  projectName: "CheapExperiment"
   appServiceName: "cheapexperiment"
 
 jobs:
@@ -26,7 +25,7 @@ jobs:
           dotnet-version: 7.0.x
 
       - name: Build the web project
-        run: dotnet build .\${{env.projectName}}\${{env.projectName}}.csproj --configuration Release
+        run: dotnet build --configuration Release
 
       - name: Publish the project
         run: dotnet publish --no-build --configuration Release --output ${{env.DOTNET_ROOT}}/myapp
