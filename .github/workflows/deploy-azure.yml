@@ -9,6 +9,9 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  projectName: "CheapExperiment"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,10 +25,10 @@ jobs:
           dotnet-version: 7.0.x
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build .\$projectName\$projectName.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp --no-build
+        run: dotnet publish --no-build --configuration Release --output ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -50,7 +53,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "CheapExperiment"
+          app-name: "$projectName"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
