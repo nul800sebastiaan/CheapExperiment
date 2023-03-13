@@ -1,7 +1,7 @@
 ﻿@inherits UmbracoViewPage<Clean.Core.Models.ViewModels.PageHeaderViewModel>
 
 @{
-    string mainImageUrl = Model.HasBackgroundImage ? Model.BackgroundImage.GetCropUrl(1903, 628) : "/media/f01jqvmq/2.jpg";
+    var mainImageUrl = Model.HasBackgroundImage ? Model.BackgroundImage.GetCropUrl(1903, 628) : "/media/f01jqvmq/2.jpg";
 }
 
 <header class="masthead" style="background-image: url('@mainImageUrl')">
@@ -25,7 +25,7 @@
 
                                 @:&nbsp;@Model.AuthorName
                             }
-                            @Umbraco.GetDictionaryValue("Article.On")@Html.Raw("&nbsp;")@Model.ArticleDate.Value.ToString("MMMM dd, yyyy")
+                            @Umbraco.GetDictionaryValue("Article.On")@Html.Raw("&nbsp;")@Model.ArticleDate?.ToString("MMMM dd, yyyy")
                         </span>
                     }
                     else

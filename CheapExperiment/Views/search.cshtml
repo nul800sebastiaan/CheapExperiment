@@ -2,11 +2,11 @@
 
 @using Clean.Core.Models.ViewModels
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
-@inject Umbraco.Cms.Core.IPublishedContentQuery publishedContentQuery
+@inject Umbraco.Cms.Core.IPublishedContentQuery PublishedContentQuery
 
 @{ 
     Layout = "master.cshtml";
-    var searchQuery = Context.Request.Query["q"]; 
+    var searchQuery = Context.Request.Query["q"];
 }
 
 @await Html.PartialAsync("~/Views/Partials/pageHeader.cshtml", new PageHeaderViewModel(Model.Name, Model.Title, Model.Subtitle, Model.MainImage))
@@ -27,9 +27,10 @@
             <div class="col-lg-8 col-md-10 mx-auto">
                 @if (!string.IsNullOrWhiteSpace(searchQuery))
                 {
-                    var results = publishedContentQuery.Search(searchQuery);
-                    long resultCount = results != null && results.Any() ? results.Count() : 0;
-                    @Html.Raw(string.Format(Umbraco.GetDictionaryValue("Search.Results"), resultCount, searchQuery)) if (resultCount > 0)
+                    var results = PublishedContentQuery.Search(searchQuery!).ToList();
+                    long resultCount = results.Any() ? results.Count() : 0;
+                    @Html.Raw(string.Format(Umbraco.GetDictionaryValue("Search.Results")!, resultCount, searchQuery))
+                    if (resultCount > 0)
                     {
                         foreach (var result in results)
                         {
