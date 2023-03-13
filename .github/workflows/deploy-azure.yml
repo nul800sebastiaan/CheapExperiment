@@ -36,7 +36,7 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Build the web project
-        run: dotnet build "${ GITHUB_WORKSPACE }"/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj --configuration Release
+        run: dotnet build ${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj --configuration Release
 
       - name: Publish the project
         run: dotnet publish --no-build --configuration Release --output ${{env.DOTNET_ROOT}}/myapp
