@@ -36,7 +36,7 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Testing - GITHUB_WORKSPACE
-        run: echo "${GITHUB_WORKSPACE}
+        run: echo "${GITHUB_WORKSPACE}"
 
       - name: Build the web project
         run: dotnet build /home/runner/work/CheapExperiment/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj --configuration Release
