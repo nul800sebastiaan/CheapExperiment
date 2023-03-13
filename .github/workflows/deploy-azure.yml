@@ -10,6 +10,7 @@ on:
   workflow_dispatch:
 
 env:
+  PROJECT_NAME: CheapExperiment
   AZURE_WEBAPP_NAME: cheapexperiment
   AZURE_WEBAPP_PACKAGE_PATH: "."
   DOTNET_VERSION: "7.0.x"
@@ -35,7 +36,7 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Build the web project
-        run: dotnet build --configuration Release
+        run: dotnet build ${{ env.PROJECT_NAME }}\${{ env.PROJECT_NAME }}.csproj --configuration Release
 
       - name: Publish the project
         run: dotnet publish --no-build --configuration Release --output ${{env.DOTNET_ROOT}}/myapp
