@@ -10,7 +10,7 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                @if (homePage.SocialLinks != null && homePage.SocialLinks.Any())
+                @if (homePage!.SocialLinks != null && homePage.SocialLinks.Any())
                 {
                     <ul class="list-inline text-center">
                         @foreach (var item in homePage.SocialLinks)
@@ -25,7 +25,7 @@
                             }
 
                             <li class="list-inline-item">
-                                <a href="@item.Link.Url" target="@item.Link.Target" rel="@(item.Link.Type == global::Umbraco.Cms.Core.Models.LinkType.External ? "noopener" : null)" title="@item.Link.Name">
+                                <a href="@item.Link?.Url" target="@item.Link?.Target" rel="@(item.Link != null && item.Link.Type == global::Umbraco.Cms.Core.Models.LinkType.External ? "noopener" : null)" title="@item.Link?.Name">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="@iconClass fa-stack-1x fa-inverse"></i>

@@ -5,11 +5,7 @@
 
 @{
     Layout = "master.cshtml";
-    var submitted = false;
-    if (bool.TryParse(TempData["Success"]?.ToString() ?? "", out var success))
-    {
-        submitted = true;
-    }
+    bool submitted = bool.TryParse(TempData["Success"]?.ToString() ?? "", out var success);
 }
 
 @await Html.PartialAsync("~/Views/Partials/pageHeader.cshtml", new PageHeaderViewModel(Model.Name, Model.Title, Model.Subtitle, Model.MainImage))

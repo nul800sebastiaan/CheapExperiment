@@ -1,12 +1,11 @@
 ﻿@using System.Web
-@using Microsoft.AspNetCore.Html
 @using Newtonsoft.Json.Linq
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<dynamic>
 
-@if (Model != null && Model.GetType() == typeof(JObject) && Model.sections != null)
+@if (Model != null && Model!.GetType() == typeof(JObject) && Model!.sections != null)
 {
     <div class="umb-grid">
-        @foreach (var section in Model.sections)
+        @foreach (var section in Model!.sections)
         {
             <div class="grid-section">
                 <div class="container">
@@ -14,7 +13,7 @@
                         <div class="col-lg-8 col-md-10 mx-auto">
                             @foreach (var row in section.rows)
                             {
-                                renderRow(row);
+                                RenderRow(row);
                             }
                         </div>
                     </div>
@@ -26,7 +25,7 @@
 
 @functions{
 
-    private async Task renderRow(dynamic row)
+    private async Task RenderRow(dynamic row)
     {
         <div @RenderElementAttributes(row)>
             <div class="row clearfix">
@@ -36,9 +35,9 @@
                         <div @RenderElementAttributes(area)>
                             @foreach (var control in area.controls)
                             {
-                                if (control != null && control.editor != null && control.editor.view != null)
+                                if (control != null && control!.editor != null && control!.editor.view != null)
                                 {
-                                    <text>@await Html.PartialAsync("grid/editors/base", (object)control)</text>
+                                    @await Html.PartialAsync("grid/editors/base", (object)control!)
                                 }
                             }
                         </div>

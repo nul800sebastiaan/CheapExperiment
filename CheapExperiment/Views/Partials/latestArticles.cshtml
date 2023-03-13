@@ -4,16 +4,16 @@
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
 
 @{
-    ArticleList articleList = UmbracoContext.Content.GetAtRoot().DescendantsOrSelf<ArticleList>().FirstOrDefault();
-    int modelId = Model.Id;
+    var articleList = UmbracoContext?.Content?.GetAtRoot().DescendantsOrSelf<ArticleList>().FirstOrDefault();
+    var modelId = Model.Id;
     var isArticleListPage = modelId == articleList?.Id;
     var fallbackPageSize = isArticleListPage ? 10 : 3;
 
     var pageSize = QueryStringHelper.GetIntFromQueryString(Context.Request.Query, "size", fallbackPageSize);
     var pageNumber = QueryStringHelper.GetIntFromQueryString(Context.Request.Query, "page", 1);
-    var allArticles = articleList?.Children<Article>().Where(x => x.IsVisible()).OrderByDescending(x => x.ArticleDate) ?? Enumerable.Empty<Article>();
+    var allArticles = articleList?.Children<Article>()!.Where(x => x.IsVisible()).OrderByDescending(x => x.ArticleDate).ToList() ?? Enumerable.Empty<Article>().ToList();
     var pageOfArticles = allArticles.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-    var totalItemCount = allArticles.Count();
+    var totalItemCount = allArticles.Count;
     var pageCount = totalItemCount > 0 ? Math.Ceiling((double)totalItemCount / pageSize) : 1;
 
 }
@@ -53,7 +53,7 @@
                         <div class="paging-block">
                             @if (pageNumber > 1)
                             {
-                                <a class="btn btn-primary float-left" href="@($"{articleList.Url()}?page={pageNumber - 1}&size={pageSize}")">@Umbraco.GetDictionaryValue("Paging.Previous")</a>
+                                <a class="btn btn-primary float-left" href="@($"{articleList!.Url()}?page={pageNumber - 1}&size={pageSize}")">@Umbraco.GetDictionaryValue("Paging.Previous")</a>
                             }
                             else
                             {
@@ -66,7 +66,7 @@
                         <div class="paging-block">
                             @if (pageNumber < pageCount)
                             {
-                                <a class="btn btn-primary float-right" href="@($"{articleList.Url()}?page={pageNumber + 1}&size={pageSize}")">@Umbraco.GetDictionaryValue("Paging.Next")</a>
+                                <a class="btn btn-primary float-right" href="@($"{articleList!.Url()}?page={pageNumber + 1}&size={pageSize}")">@Umbraco.GetDictionaryValue("Paging.Next")</a>
                             }
                             else
                             {
@@ -80,7 +80,7 @@
                 {
                     if (articleList != null && !string.IsNullOrWhiteSpace(articleList.Url()))
                     {
-                        <a class="btn btn-primary float-end" href="@(articleList?.Url())">@Umbraco.GetDictionaryValue("ArticleList.ViewAll")</a>
+                        <a class="btn btn-primary float-end" href="@(articleList.Url())">@Umbraco.GetDictionaryValue("ArticleList.ViewAll")</a>
                     }
                 }
             </div>
