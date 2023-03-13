@@ -35,8 +35,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Testing - GITHUB_WORKSPACE
+        run: echo "${GITHUB_WORKSPACE}
+
       - name: Build the web project
-        run: dotnet build ${{ env.PROJECT_NAME }}\${{ env.PROJECT_NAME }}.csproj --configuration Release
+        run: dotnet build /home/runner/work/CheapExperiment/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj --configuration Release
 
       - name: Publish the project
         run: dotnet publish --no-build --configuration Release --output ${{env.DOTNET_ROOT}}/myapp
